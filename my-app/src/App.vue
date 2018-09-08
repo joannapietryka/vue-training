@@ -11,7 +11,7 @@
       <input
         name="product"
         v-model="newProduct.name"
-        v-validate="'required|min:4'"
+        v-validate="'required|min:3'"
       >
       <button>Add</button>
       <!--3- 2. errors are added by default when validation is initialized and have some useful methods -->
