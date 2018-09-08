@@ -1,32 +1,22 @@
 <template>
   <div id="app">
     <h2>My awesome list</h2>
-    <ul>
-      <li v-for="p in products" :key="p.id">{{ p.name }}</li>
-    </ul>
-    <p v-if="!products.length">No products!</p>
-
-    <form @submit.prevent="onSubmit()">
-      <!--3- 1. name attribute is now required as well as v-validate with its own DSL values -->
-      <input
-        name="product"
-        v-model="newProduct.name"
-        v-validate="'required|min:3'"
-      >
-      <button>Add</button>
-      <!--3- 2. errors are added by default when validation is initialized and have some useful methods -->
-      <div v-show="errors.has('product')">
-       {{ errors.first('product') + " hehe" }}
-      </div>
-    </form>
+   <List :products="products"></List>
+  <Form @add-product="onAddProduct"></Form>
   </div>
 </template>
 
 <script>
 import uuid from 'uuid/v4';
+import Form from './components/Form';
+import List from './components/List';
 
 export default {
   name: 'app',
+  components: {
+    Form,
+    List
+  },
   data() {
     return {
       products: [{
@@ -42,20 +32,8 @@ export default {
     }
   },
   methods: {
-    onSubmit() {
-      // 3. On the JS side we need to use yet another injected value called $validator to validate all the fields
-      this.$validator.validateAll().then(result => {
-        if (!result) {
-          return;
-        }
-        this.products.push({
-          id: uuid(),
-          ...this.newProduct
-        });
-        this.newProduct.name = '';
-        // 4/ and reset validation state after adding a product
-        this.$validator.reset();
-      });
+    onAddProduct(product) {
+      this.products.push(product);
     }
   }
 }
