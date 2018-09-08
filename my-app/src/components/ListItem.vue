@@ -1,6 +1,6 @@
 <template>
 <div>
-      <li>{{ product.name }} </li>
+      <li>{{ product.quote }} </li>
 </div>
 </template>
 <script>

@@ -1,7 +1,8 @@
 <template>
   <div id="app">
     <h2>My awesome list</h2>
-   <List :products="products"></List>
+
+   <List :products="sharedState.products"></List>
   <Form @add-product="onAddProduct"></Form>
   </div>
 </template>
@@ -10,6 +11,8 @@
 import uuid from 'uuid/v4';
 import Form from './components/Form';
 import List from './components/List';
+import axios from 'axios';
+import store from './store';
 
 export default {
   name: 'app',
@@ -17,23 +20,17 @@ export default {
     Form,
     List
   },
+  created() {
+    store.fetchProducts();
+  },
   data() {
     return {
-      products: [{
-        id: 0,
-        name: 'Coffee'
-      }, {
-        id: 1,
-        name: 'Pizza'
-      }],
-      newProduct: {
-        name: ''
-      }
+      sharedState: store.state
     }
   },
   methods: {
-    onAddProduct(product) {
-      this.products.push(product);
+   onAddProduct(product) {
+      store.addProduct(product);
     }
   }
 }

@@ -3,7 +3,7 @@
 <!--3- 1. name attribute is now required as well as v-validate with its own DSL values -->
 <input
   name="product"
-  v-model="newProduct.name"
+  v-model="newProduct.quote"
   v-validate="'required|min:3'"
 >
 <button>Add</button>
@@ -20,10 +20,10 @@
   export default {
     name: "Form",
 
-    data() {
+     data() {
       return {
         newProduct: {
-          name: ''
+          quote: ''
         }
       }
     },
@@ -38,7 +38,7 @@
             id: uuid(),
             ...this.newProduct
           });
-          this.newProduct.name = '';
+          this.newProduct.quote = '';
           this.$validator.reset();
         });
       }
